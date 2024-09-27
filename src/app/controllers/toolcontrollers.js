@@ -23,15 +23,16 @@ class ToolController {
     async performScan(req, res) {
       const baseUrl = req.body.baseUrl; 
       const wordlistFilePath = req.file.path; 
+      const threatLevel = parseInt(req.body.threatLevel, 10) || 10; 
+      const totalPaths = fs.readFileSync(wordlistFilePath, 'utf-8').split('\n').length;
   
       try {
           const fileContent = fs.readFileSync(wordlistFilePath, 'utf-8');
           const paths = fileContent.split('\n').map(path => path.trim()).filter(Boolean);
           const results = [];
-          const totalPaths = paths.length;
   
-          for (let i = 0; i < totalPaths; i++) {
-              const path = paths[i];
+          for (let index = 0; index < paths.length; index++) {
+              const path = paths[index];
               const fullUrl = `${baseUrl}/${path}`;
               try {
                   const response = await axios.get(fullUrl);
@@ -50,28 +51,33 @@ class ToolController {
                   } else {
                       results.push({
                           url: fullUrl,
-                          status: 'Không nhận được phản hồi từ server',
+                          status: 'No response from server, check your internet',
                           length: 0
                       });
                   }
               }
   
-              // Tính toán và gửi thông tin tiến trình
-              const progress = Math.floor(((i + 1) / totalPaths) * 100);
+    
+              const progress = Math.round(((index + 1) / totalPaths) * 100);
               wss.clients.forEach(client => {
                   if (client.readyState === WebSocket.OPEN) {
                       client.send(JSON.stringify({ progress, totalPaths }));
                   }
               });
+  
+              
+              await new Promise(resolve => setTimeout(resolve, 1000 / threatLevel));
           }
   
           fs.unlinkSync(wordlistFilePath);
           res.render('tools/results', { results });
       } catch (error) {
           console.error(error);
-          res.status(500).send('Có lỗi xảy ra khi quét.');
+          res.status(500).send('An error occurred during the scan.');
       }
   }
+  
+
 }
 
 module.exports = new ToolController();

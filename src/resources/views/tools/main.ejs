@@ -82,13 +82,18 @@
             <label for="wordlist">Choose Wordlist</label>
             <input type="file" name="wordlist" accept=".txt" required>
         </div>
+        <div>
+            <label for="threat-level">Set Threshold (Requests per second)</label>
+            <input type="number" id="threat-level" name="threatLevel" value="10" min="1" max="100" required>
+        </div>
+        
         <button type="submit">Start Attack</button>
     </form>
 
     <div id="progress">Waiting for scan...</div>
 
     <script>
-        const socket = new WebSocket('ws://localhost:8080'); // Đảm bảo địa chỉ đúng với server của bạn
+        const socket = new WebSocket('ws://localhost:8080'); 
 
         socket.onmessage = function(event) {
             const data = JSON.parse(event.data);
@@ -101,3 +106,5 @@
     </script>
 </body>
 </html>
+
+
