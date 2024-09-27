@@ -1,19 +1,8 @@
-const blogsRouter = require('./blogs');
-const siteRouter = require('./news');
-const registerRouter = require('./register');
-const storeRouter = require('./stored');
-
-
-
-
-
+const siteRouter = require('./scan');
 
 
 function route(app) {
     app.use('/', siteRouter);
-    app.use('/scan', blogsRouter);
-    app.use('/register', registerRouter);
-    app.use('/stored', storeRouter);
 }
 
 module.exports = route;

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #f80c00;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+            padding: 15px;
+            font-size: 16px;
+            color: #fff; 
+        }
+
+        .status-200 {
+            background-color: #28a745; 
+        }
+
+        .status-error {
+            background-color: #dc3545; 
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #080808;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        a:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Scan Results</h1>
+    <ul>
+        <% results.forEach(function(result) { %>
+            <li class="<%= result.status === 200 ? 'status-200' : 'status-error' %>">
+                URL: <%= result.url %>, Status: <%= result.status %>, Length: <%= result.length %>
+            </li>
+        <% }); %>
+    </ul>
+    <a href="/scan">Quay lại</a>
+</body>
+</html>

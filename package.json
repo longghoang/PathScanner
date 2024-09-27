@@ -1,42 +1,32 @@
 {
-  "name": "ql_gui-xe",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --inspect src/index.js",
-    "watch": "node-sass --watch src/resources/scss/ -o src/public/css/"
-  },
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.4.0",
-    "axios": "^1.5.0",
-    "bcrypt": "^5.1.0",
-    "canvas": "^2.11.2",
-    "connect-flash": "^0.1.1",
-    "cookie-parser": "^1.4.6",
-    "express": "^4.18.2",
-    "express-handlebars": "^7.0.7",
-    "express-session": "^1.18.0",
-    "face-api.js": "^0.22.2",
-    "feather-icons": "^4.29.0",
-    "jsonwebtoken": "^9.0.0",
-    "method-override": "^3.0.0",
-    "moment": "^2.29.4",
-    "moment-timezone": "^0.5.45",
-    "mongod": "^2.0.0",
-    "mongoose": "^7.3.1",
-    "mongoose-delete": "^1.0.1",
-    "multer": "^1.4.5-lts.1",
-    "mysql": "^2.18.1",
-    "node-webcam": "^0.8.2",
-    "nodemailer": "^6.9.3"
-  },
-  "devDependencies": {
-    "morgan": "^1.10.0",
-    "node-sass": "^9.0.0",
-    "nodemon": "^2.0.22"
-  }
+    "name": "web_about",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "nodemon --inspect src/index.js",
+        "watch": "node-sass --watch src/resources/scss/ -o src/public/css/"
+    },
+    "author": "Long",
+    "license": "ISC",
+    "dependencies": {
+        "@fortawesome/fontawesome-free": "^6.4.0",
+        "axios": "^1.5.0",
+        "bcrypt": "^5.1.0",
+        "cookie-parser": "^1.4.6",
+        "ejs": "^3.1.10",
+        "express": "^4.18.2",
+        "express-handlebars": "^7.0.7",
+        "express-session": "^1.17.3",
+        "feather-icons": "^4.29.0",
+        "jsonwebtoken": "^9.0.0",
+        "method-override": "^3.0.0",
+        "multer": "^1.4.5-lts.1"
+    },
+    "devDependencies": {
+        "morgan": "^1.10.0",
+        "node-sass": "^9.0.0",
+        "nodemon": "^2.0.22"
+    }
 }

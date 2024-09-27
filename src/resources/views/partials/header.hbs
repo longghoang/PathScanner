@@ -14,26 +14,21 @@
   }
   .nav-link-text {
     padding-left: 10px;
-    color: #ffffff;
-    font-weight: bold;
-
   }
 
   .navbar-brand {
     font-size: 38px;
-    color: #ffffff;
   }
 
   .navbar {
-    padding: 15px 10px;
-    background-color: #ffc107;
+    padding-bottom: 10px;
   }
 
   /* Dropdown menu styles */
   .dropdown-menu {
     background-color: #fff;
     border: 1px solid rgba(0, 0, 0, 0.15);
-    padding: 5px;
+    padding: 10px;
     display: none;
     position: absolute;
     z-index: 1;
@@ -58,40 +53,15 @@
   .nav-item .nav-link i {
     margin-right: 5px;
   }
-
-  .nav-item {
-    list-style: none;
-  }
-
-  .help {
-    margin: 0 10px;
-    display: flex;
-    font-size: 20px;
-    text-decoration: none;
-  }
-
-  .logo {
-    width: 100px;
-  }
-
-
-
 </style>
 
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    {{!-- <i class="fa fa-car" style="color: #29ff3b; font-size: 50px;"></i> --}}
-
-    <a href="/">
-
-       <img class="logo" src="/imgs/logook-removebg-preview.png" alt="">
-
-    </a>
-    
+    <i class="fas fa-blog" style="color: #fafcff; font-size: 50px;"></i>
     <li class="nav-item">
           <a class="nav-link custom-nav-link" href="#"></a>
         </li>
-    {{!-- <a class="navbar-brand fw-bold" href="/">Car AI</a> --}}
+    <a class="navbar-brand fw-bold" href="/">My Blog</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -117,12 +87,15 @@
             onmouseout="hideDropdown()"
           >
             <i class="fas fa-book" style="color: #fafcff; font-size: 20px;"></i>
-            <span class="nav-link-text">Quản lý xe</span>
+            <span class="nav-link-text">Bài viết của tôi</span>
           </a>
           <div id="dropdown-menu" class="dropdown-menu" onmouseover="showDropdown()" onmouseout="hideDropdown()">
-            <a class="dropdown-item" style="font-weight: bold;" href="/scan/uicapture">Quét xe vào/ra</a>
-            <a class="dropdown-item" style="font-weight: bold;" href="/stored/revenue">Quản lý doanh thu</a>
-            <a class="dropdown-item" style="font-weight: bold;" href="/revenue/park">Xem vị trí</a>
+            <a class="dropdown-item" style="font-weight: bold;" href="/blogs/create">Tạo bài viết</a>
+            <a class="dropdown-item" style="font-weight: bold;" href="/stored/blogs">Danh sách bài viết</a>
+            <a class="dropdown-item" style="font-weight: bold;" href="/hmac/create">Kiểm tra HMAC</a>
+            
+           
+
           </div>
         </li>
        <li class="nav-item">
@@ -144,64 +117,22 @@
         >
 
           <a class="dropdown-item"style="font-weight: bold;" href="/account">Tài khoản</a>
-          <a id="login-link" class="dropdown-item" style="font-weight: bold;" href="/login">Đăng nhập</a>
-          <a id="logout-link" class="dropdown-item" style="font-weight: bold; display: none;" href="/logout">Đăng xuất</a>
+          <a class="dropdown-item"style="font-weight: bold;" href="/login">Đăng nhập</a>
+         
+          
+          
         </div>
       </li>
-
-
-      
-
       </ul>
-
-      
-
-      <li class="nav-item">
-        <a class="help" href="#" onclick="toggleTicketDropdown()">
-</a>
-
-
-
-  <a href="/" style="text-decoration: none;">
-  <i style="color: #fff; font-size:large;" class="fa fa-id-card"></i>
-
-<span style="color: #ffffff; font-size:large; margin-right: 10px;" class="nav-link-text" id="user-ticket">Vé tháng</span>
-  </a>
-<div id="ticket-dropdown-menu" class="dropdown-menu">
-  <a class="dropdown-item" style="font-weight: bold;" href="/ticket">Đăng ký vé</a>
-  <a class="dropdown-item" style="font-weight: bold;" href="/ticketmanager">Quản lý vé</a>
-</div>
-
-      </li>
-        <a class="help" href="/help"><i class="fa fa-headset" style="color: #ff3e3e; margin-top: 3px;"></i> 
-        
-          <span style="color: #ffffff; font-size:large; font-weight: bold; margin: 0 10px;">Hỗ trợ</span>
-        
-         </a>
-      
-        
-        
-     
+      <form class="d-flex" action="/search">
+        <input class="form-control me-2" type="search" placeholder="Tìm kiếm bài viết ..." aria-label="Search" name="search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
     </div>
   </div>
 </nav>
 
 <script>
-
-  function toggleTicketDropdown() {
-  var dropdownMenu = document.getElementById("ticket-dropdown-menu");
-  dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
-}
-
-// Ẩn dropdown-menu khi di chuột ra ngoài
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('.help') && !e.target.closest('#ticket-dropdown-menu')) {
-    var dropdownMenu = document.getElementById("ticket-dropdown-menu");
-    dropdownMenu.style.display = 'none';
-  }
-});
-
-
   function showDropdown() {
     var dropdownMenu = document.getElementById("dropdown-menu");
     dropdownMenu.style.display = "block";
@@ -221,41 +152,6 @@ document.addEventListener('click', function(e) {
     var dropdownMenu = document.getElementById("user-dropdown-menu");
     dropdownMenu.style.display = "none";
   }
-
-
-  ///
-
-   function showLoginLogout() {
-            document.getElementById('user-dropdown-menu').style.display = 'block';
-        }
-
-        function hideLoginLogout() {
-            document.getElementById('user-dropdown-menu').style.display = 'none';
-        }
-
-        function checkLoginStatus() {
-            const userId = getCookie('userId'); // Giả sử userId được lưu trong cookie
-
-            if (userId) {
-                document.getElementById('login-link').style.display = 'none';
-                document.getElementById('logout-link').style.display = 'block';
-            }
-        }
-
-        function getCookie(name) {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-
-            if (parts.length === 2) return parts.pop().split(';').shift();
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            checkLoginStatus();
-        });
-
-
-
-  ///
 
 
    window.addEventListener('DOMContentLoaded', () => {
