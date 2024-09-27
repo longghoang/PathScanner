@@ -57,6 +57,13 @@
             font-size: 16px;
         }
 
+        #progress {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            color: #333;
+        }
+
         @media (max-width: 500px) {
             form {
                 width: 90%;
@@ -65,7 +72,7 @@
     </style>
 </head>
 <body>
-    <h1>Tool Scan Path</h1>
+    <h1>PathScanner</h1>
     <form action="/scan/tool" method="POST" enctype="multipart/form-data">
         <div>
             <label for="base-url">Enter Target</label>
@@ -77,5 +84,20 @@
         </div>
         <button type="submit">Start Attack</button>
     </form>
+
+    <div id="progress">Waiting for scan...</div>
+
+    <script>
+        const socket = new WebSocket('ws://localhost:8080'); // Đảm bảo địa chỉ đúng với server của bạn
+
+        socket.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            const progressElement = document.getElementById('progress');
+
+            if (progressElement) {
+                progressElement.innerText = `Scanning: ${data.progress}% (${data.totalPaths} paths)`;
+            }
+        };
+    </script>
 </body>
 </html>

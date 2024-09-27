@@ -27,10 +27,12 @@
         li {
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            margin: 10px 0;
-            padding: 15px;
-            font-size: 16px;
-            color: #fff; 
+            margin: 10px auto;
+            padding: 10px;
+            font-size: 14px; /* Giảm kích thước chữ */
+            color: #fff;
+            max-width: 600px; /* Giới hạn độ rộng tối đa */
+            width: 100%; /* Đảm bảo kích thước phù hợp với các màn hình nhỏ */
         }
 
         .status-200 {
@@ -54,6 +56,14 @@
 
         a:hover {
             background-color: #333;
+        }
+
+       
+        @media (max-width: 768px) {
+            li {
+                font-size: 12px; 
+                padding: 8px;
+            }
         }
     </style>
 </head>
