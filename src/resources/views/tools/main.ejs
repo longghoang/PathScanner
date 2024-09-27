@@ -12,13 +12,11 @@
             margin: 0;
             padding: 20px;
         }
-
         h1 {
             text-align: center;
             color: #f80c00;
             margin-bottom: 20px;
         }
-
         form {
             background-color: #fff;
             border-radius: 5px;
@@ -27,17 +25,14 @@
             max-width: 400px;
             margin: 0 auto;
         }
-
         div {
             margin-bottom: 15px;
         }
-
         label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
         }
-
         input[type="text"], input[type="file"] {
             width: 100%;
             padding: 10px;
@@ -45,25 +40,25 @@
             border-radius: 4px;
             box-sizing: border-box;
         }
-
         button {
-            width: 100%;
-            padding: 10px;
+            padding: 8px 12px; 
             background-color: #080808;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px; 
+            margin-right: 10px; 
         }
-
+        button:last-child {
+            margin-right: 0;
+        }
         #progress {
             margin-top: 20px;
             text-align: center;
             font-size: 18px;
             color: #333;
         }
-
         @media (max-width: 500px) {
             form {
                 width: 90%;
@@ -87,13 +82,20 @@
             <input type="number" id="threat-level" name="threatLevel" value="10" min="1" max="100" required>
         </div>
         
-        <button type="submit">Start Attack</button>
+        <div>
+            <button type="submit">Start Attack</button>
+            <button type="button" id="stop-scan">Stop Scan</button>
+        </div>
     </form>
 
     <div id="progress">Waiting for scan...</div>
 
     <script>
         const socket = new WebSocket('ws://localhost:8080'); 
+
+        document.getElementById('stop-scan').onclick = function() {
+            fetch('/scan/stop', { method: 'POST' }); 
+        };
 
         socket.onmessage = function(event) {
             const data = JSON.parse(event.data);
@@ -106,5 +108,3 @@
     </script>
 </body>
 </html>
-
-

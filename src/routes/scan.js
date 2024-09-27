@@ -18,7 +18,10 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Routes
+
 router.get('/scan', scanController.scan);
+router.get('/scan_results.xlsx', scanController.xlsx);
 router.post('/scan/tool', upload.single('wordlist'), scanController.performScan);
+router.post('/scan/stop', scanController.stop);
 
 module.exports = router;

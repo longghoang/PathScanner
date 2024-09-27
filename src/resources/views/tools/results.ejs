@@ -12,18 +12,15 @@
             margin: 0;
             padding: 20px;
         }
-
         h1 {
             text-align: center;
             color: #f80c00;
             margin-bottom: 20px;
         }
-
         ul {
             list-style-type: none;
             padding: 0;
         }
-
         li {
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -34,15 +31,12 @@
             max-width: 600px; /* Giới hạn độ rộng tối đa */
             width: 100%; /* Đảm bảo kích thước phù hợp với các màn hình nhỏ */
         }
-
         .status-200 {
             background-color: #28a745; 
         }
-
         .status-error {
             background-color: #dc3545; 
         }
-
         a {
             display: inline-block;
             margin-top: 20px;
@@ -53,12 +47,9 @@
             border-radius: 5px;
             text-align: center;
         }
-
         a:hover {
             background-color: #333;
         }
-
-       
         @media (max-width: 768px) {
             li {
                 font-size: 12px; 
@@ -77,5 +68,8 @@
         <% }); %>
     </ul>
     <a href="/scan">Quay lại</a>
+    <% if (excelFilePath) { %>
+        <a href="<%= excelFilePath %>" download>Download Excel File</a>
+    <% } %>
 </body>
 </html>
