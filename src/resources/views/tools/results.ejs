@@ -56,6 +56,21 @@
                 padding: 8px;
             }
         }
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .pagination a {
+            margin: 0 5px;
+            padding: 5px 10px;
+            background-color: #080808;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .pagination a:hover {
+            background-color: #333;
+        }
     </style>
 </head>
 <body>
@@ -67,9 +82,21 @@
             </li>
         <% }); %>
     </ul>
-    <a href="/scan">Quay lại</a>
-    <% if (excelFilePath) { %>
-        <a href="<%= excelFilePath %>" download>Download Excel File</a>
+
+   <!-- Phần phân trang -->
+<div class="pagination">
+    <% if (currentPage > 1) { %>
+        <a href="/scan/tool/results?page=<%= currentPage - 1 %>">Previous</a>
     <% } %>
+
+    <span>Page <%= currentPage %> of <%= totalPages %></span>
+
+    <% if (currentPage < totalPages) { %>
+        <a href="/scan/tool/results?page=<%= currentPage + 1 %>">Next</a>
+    <% } %>
+</div>
+
+
+    <a href="/scan">Quay lại</a>
 </body>
 </html>

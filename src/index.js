@@ -3,6 +3,14 @@ const app = express();
 const port = 4444;
 const route = require('./routes');
 const path = require('path');
+const session = require('express-session');
+
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+}));
+
 
 
 
