@@ -6,30 +6,36 @@
     <title>Scan Results</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
+            font-family: 'Courier New', monospace;  
+            background-color: #121212; 
+            color: #ffffff; 
             margin: 0;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         h1 {
             text-align: center;
             color: #f80c00;
             margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
         }
         ul {
             list-style-type: none;
             padding: 0;
+            width: 100%;
         }
         li {
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             margin: 10px auto;
-            padding: 10px;
-            font-size: 14px; /* Giảm kích thước chữ */
+            padding: 15px;
+            font-size: 14px;
             color: #fff;
-            max-width: 600px; /* Giới hạn độ rộng tối đa */
-            width: 100%; /* Đảm bảo kích thước phù hợp với các màn hình nhỏ */
+            max-width: 600px;
+            width: 100%;
+            transition: background-color 0.3s;
         }
         .status-200 {
             background-color: #28a745; 
@@ -37,23 +43,27 @@
         .status-error {
             background-color: #dc3545; 
         }
+        .status-200:hover, .status-error:hover {
+            opacity: 0.9; 
+        }
         a {
             display: inline-block;
             margin-top: 20px;
             padding: 10px 15px;
-            background-color: #080808;
+            background-color: #f80c00; 
             color: white;
             text-decoration: none;
             border-radius: 5px;
             text-align: center;
+            transition: background-color 0.3s; 
         }
         a:hover {
-            background-color: #333;
+            background-color: #e60000; 
         }
         @media (max-width: 768px) {
             li {
-                font-size: 12px; 
-                padding: 8px;
+                font-size: 12px;
+                padding: 10px;
             }
         }
         .pagination {
@@ -63,13 +73,14 @@
         .pagination a {
             margin: 0 5px;
             padding: 5px 10px;
-            background-color: #080808;
+            background-color: #f80c00; 
             color: white;
             text-decoration: none;
             border-radius: 5px;
+            transition: background-color 0.3s; 
         }
         .pagination a:hover {
-            background-color: #333;
+            background-color: #e60000; 
         }
     </style>
 </head>
@@ -83,20 +94,23 @@
         <% }); %>
     </ul>
 
-   <!-- Phần phân trang -->
-<div class="pagination">
-    <% if (currentPage > 1) { %>
-        <a href="/scan/tool/results?page=<%= currentPage - 1 %>">Previous</a>
+    <!-- Phần phân trang -->
+    <div class="pagination">
+        <% if (currentPage > 1) { %>
+            <a href="/scan/tool/results?page=<%= currentPage - 1 %>">Previous</a>
+        <% } %>
+
+        <span>Page <%= currentPage %> of <%= totalPages %></span>
+
+        <% if (currentPage < totalPages) { %>
+            <a href="/scan/tool/results?page=<%= currentPage + 1 %>">Next</a>
+        <% } %>
+    </div>
+
+    <% if (excelFilePath) { %>
+        <a href="/download/excel" class="download-link">Download Excel results</a>
     <% } %>
 
-    <span>Page <%= currentPage %> of <%= totalPages %></span>
-
-    <% if (currentPage < totalPages) { %>
-        <a href="/scan/tool/results?page=<%= currentPage + 1 %>">Next</a>
-    <% } %>
-</div>
-
-
-    <a href="/scan">Quay lại</a>
+    <a href="/scan">Back</a>
 </body>
 </html>

@@ -55,11 +55,6 @@ class ToolController {
                         headers: {
                             'Connection': 'keep-alive',
                         },
-                        proxy: {
-                            host: '127.0.0.1',
-                            port: 8080,
-                            protocol: 'http',
-                        }
                     });
                     results.push({
                         url: fullUrl,
@@ -101,33 +96,55 @@ class ToolController {
                 { header: 'Status', key: 'status' },
                 { header: 'Length', key: 'length' }
             ];
-    
+        
             results.forEach(result => {
-                worksheet.addRow(result);
+                const row = worksheet.addRow(result);
+        
+                // Thiết lập màu nền cho ô Status
+                if (result.status === 200) {
+                    row.getCell('status').fill = {
+                        // Màu nền xanh cho trạng thái 200
+                        type: 'pattern',
+                        pattern: 'solid',
+                        fgColor: { argb: 'FF28A745' } // Màu xanh
+                    };
+                } else {
+                    row.getCell('status').fill = {
+                        // Màu nền đỏ cho các trạng thái lỗi
+                        type: 'pattern',
+                        pattern: 'solid',
+                        fgColor: { argb: 'FFDC3545' } // Màu đỏ
+                    };
+                }
             });
-    
-            const excelFilePath = 'scan_results.xlsx';
+        
+            const excelFilePath = `uploads/scan_results_${Date.now()}.xlsx`; 
             await workbook.xlsx.writeFile(excelFilePath);
     
-            // Gửi kết quả đến client
+            // Xóa file wordlist sau khi quét xong
             fs.unlinkSync(wordlistFilePath);
     
+            // Lưu đường dẫn file vào session
+            req.session.excelFilePath = excelFilePath; 
             req.session.results = results; 
-
+    
             // Phân trang kết quả
             const page = parseInt(req.query.page) || 1;
             const pageSize = ToolController.resultsPerPage;
             const totalPages = Math.ceil(results.length / pageSize);
             const paginatedResults = results.slice((page - 1) * pageSize, page * pageSize);
-        
-            res.render('tools/results', { results: paginatedResults, excelFilePath, totalPages, currentPage: page });
+    
+            // Render kết quả và cung cấp đường dẫn tải file
+            res.render('tools/results', { results: paginatedResults, totalPages, currentPage: page, excelFilePath: excelFilePath });
         } catch (error) {
             console.error(error);
             res.status(500).send('An error occurred during the scan.');
         } finally {
-            isScanning = false; 
+            isScanning = false;
         }
     }
+    
+    
     
 
     async stop(req, res, next) {
@@ -141,18 +158,42 @@ class ToolController {
 
     async getScanResults(req, res) {
         try {
-            
-            const results = req.session.results || []; 
+            const results = req.session.results || [];
             const page = parseInt(req.query.page) || 1;
             const pageSize = ToolController.resultsPerPage; 
             const totalPages = Math.ceil(results.length / pageSize);
             const paginatedResults = results.slice((page - 1) * pageSize, page * pageSize);
-
-            res.render('tools/results', { results: paginatedResults, totalPages, currentPage: page });
+            
+            // Thêm biến excelFilePath
+            const excelFilePath = req.session.excelFilePath; // Lấy từ session nếu đã được lưu
+    
+            res.render('tools/results', { 
+                results: paginatedResults, 
+                excelFilePath, // Gửi biến vào view
+                totalPages, 
+                currentPage: page 
+            });
         } catch (error) {
             console.error(error);
             res.status(500).send('An error occurred while fetching results.');
         }
+    }
+
+    //excel
+    async excel(req, res, next) {
+        const excelFilePath = req.session.excelFilePath; // Lấy đường dẫn file từ session
+    if (excelFilePath) {
+        res.download(excelFilePath, 'scan_results.xlsx', (err) => {
+            if (err) {
+                console.error('Error downloading file:', err);
+                res.status(500).send('Error downloading file.');
+            }
+            // Xóa đường dẫn file trong session nếu không còn cần thiết
+            delete req.session.excelFilePath;
+        });
+    } else {
+        res.status(404).send('File not found.');
+    }
     }
 }
 
